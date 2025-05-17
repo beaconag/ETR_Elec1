@@ -6,24 +6,67 @@ use App\Http\Middleware\CustomerPrevilege;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('customers.dashboard');
+    return redirect()->route('customer.dashboard');
 });
-/* ADMIN ROUTE */
-Route::get('/dashboard', function () {
-    return view('admins.dashboard');
-})->middleware(['auth', 'verified', AdminPrivilege::class])->name('admin.dashboard');
-/* END ADMIN ROUTE */
 
-/* CUSTOMER ROUTE */
-Route::get('/home', function () {
-    return view('customers.dashboard');
-})->middleware([CustomerPrevilege::class])->name('customer.dashboard');
 
-// Route::get('/home', function () {
-//     return view('customers.dashboard');
-// })->middleware(['auth', 'verified'])->name('customer.dashboard');
+/* ========== ADMIN ROUTE ========== */
 
-/* END CUSTOMER ROUTE */
+Route::middleware(['auth', 'verified', AdminPrivilege::class])->group(function () {
+    Route::get('/admin/home', function () {
+        return view('admins.dashboard');
+    })->name('admin.dashboard');
+
+    Route::get('/admin/products', function () {
+        return view('admins.products');
+    })->name('admin.products');
+
+    Route::get('/admin/categories', function () {
+        return view('admins.categories');
+    })->name('admin.categories');
+
+    Route::get('/admin/orders', function () {
+        return view('admins.orders');
+    })->name('admin.orders');
+
+    Route::get('/admin/reports', function () {
+        return view('admins.reports');
+    })->name('admin.reports');
+
+    Route::get('/admin/discounts', function () {
+        return view('admins.discounts');
+    })->name('admin.discounts');
+});
+
+// Route::get('/dashboard', function () {
+//     return view('admins.dashboard');
+// })->middleware(['auth', 'verified', AdminPrivilege::class])->name('admin.dashboard');
+
+/* ========== END ADMIN ROUTE ========== */
+
+
+/* ========== CUSTOMER ROUTE ========== */
+
+Route::middleware([CustomerPrevilege::class])->group(function () {
+    Route::get('/home', function () {
+        return view('customers.dashboard');
+    })->name('customer.dashboard');
+
+    Route::get('/about', function () {
+    return view('about');
+    })->name('about');
+
+    Route::get('/contact', function () {
+        return view('contact');
+    })->name('contact');
+
+    Route::get('/faqs', function () {
+        return view('faqs');
+    })->name('faqs');
+});
+
+/* ========== END CUSTOMER ROUTE ========== */
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
