@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProductController;
 use App\Http\Middleware\AdminPrivilege;
 use App\Http\Middleware\CustomerPrevilege;
 use Illuminate\Support\Facades\Route;
@@ -17,9 +18,14 @@ Route::middleware(['auth', 'verified', AdminPrivilege::class])->group(function (
         return view('admins.dashboard');
     })->name('admin.dashboard');
 
+    /* PRODUCTS ROUTE */
     Route::get('/admin/products', function () {
-        return view('admins.products');
+        return view('admins.products.index');
     })->name('admin.products');
+
+    Route::resource('/products', ProductController::class);
+
+    /* END OF PRODUCTS ROUTE */
 
     Route::get('/admin/categories', function () {
         return view('admins.categories');
@@ -36,6 +42,10 @@ Route::middleware(['auth', 'verified', AdminPrivilege::class])->group(function (
     Route::get('/admin/discounts', function () {
         return view('admins.discounts');
     })->name('admin.discounts');
+
+    Route::get('/admin/users', function () {
+        return view('admins.users');
+    })->name('admin.users');
 });
 
 // Route::get('/dashboard', function () {
@@ -73,5 +83,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 
 require __DIR__ . '/auth.php';

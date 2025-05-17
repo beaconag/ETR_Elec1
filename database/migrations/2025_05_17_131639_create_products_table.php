@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('availability_status');
             $table->string('image_url');
             $table->decimal('price', 8,2);
-            $table->decimal('discount', 4,2)->nullable();
+            $table->decimal('discount', 4, 2)->nullable();
             $table->integer('total_quantity')->default(0);
             $table->integer('units_sold')->default(0);
             $table->decimal('total_sales', 12,2)->default(0);
