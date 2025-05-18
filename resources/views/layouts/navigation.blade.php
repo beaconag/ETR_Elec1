@@ -5,13 +5,13 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ Auth::check() && Auth::user()->type === 'admin' ? route('admin.dashboard') : route('customer.dashboard') }}">
+                    <a href="{{ Auth::check() && Auth::user()->role === 'admin' ? route('admin.dashboard') : route('customer.dashboard') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                     </a>    
                 </div>
 
                 <!-- Navigation Links -->
-                @if (!Auth::check() || Auth::user()->type === 'customer')
+                @if (!Auth::check() || Auth::user()->role === 'customer')
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link :href="route('customer.dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Home') }}

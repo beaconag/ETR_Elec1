@@ -16,7 +16,7 @@ class CustomerPrevilege
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check() || Auth::user()->type === 'customer') {
+        if (!Auth::check() || Auth::user()->role === 'customer') {
             return $next($request);
         }
 

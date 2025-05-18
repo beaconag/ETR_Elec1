@@ -24,7 +24,6 @@ Route::middleware(['auth', 'verified', AdminPrivilege::class])->group(function (
     })->name('admin.products');
 
     Route::resource('/products', ProductController::class);
-
     /* END OF PRODUCTS ROUTE */
 
     Route::get('/admin/categories', function () {
@@ -43,9 +42,11 @@ Route::middleware(['auth', 'verified', AdminPrivilege::class])->group(function (
         return view('admins.discounts');
     })->name('admin.discounts');
 
+    /* USERS ROUTE */
     Route::get('/admin/users', function () {
         return view('admins.users');
     })->name('admin.users');
+    /* END OF USERS ROUTE */
 });
 
 // Route::get('/dashboard', function () {
